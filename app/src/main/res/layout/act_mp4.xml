@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <you.chen.media.widget.CameraView
+        android:id="@+id/cv_camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <you.chen.media.widget.FocusView
+        android:id="@+id/fv_focus"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
+
+    <Button android:id="@+id/bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="start"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button android:id="@+id/bt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/bt"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:text="切换摄像头"/>
+
+</RelativeLayout>
