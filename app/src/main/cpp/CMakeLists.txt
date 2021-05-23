@@ -8,11 +8,11 @@ cmake_minimum_required(VERSION 3.4.1)
 #include头文件目录
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-#设置所有.cpp文件路径
-file(GLOB SRC_CPP_LIST ${PROJECT_SOURCE_DIR}/*.cpp)
-
 # 指定链接库文件目录
 link_directories(${PROJECT_SOURCE_DIR}/jniLibs/${ANDROID_ABI})
+
+#设置所有.cpp文件路径
+file(GLOB SRC_CPP_LIST ${PROJECT_SOURCE_DIR}/*.cpp)
 
 add_library(
         yuv-utils

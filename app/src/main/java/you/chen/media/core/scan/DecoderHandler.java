@@ -8,8 +8,8 @@ import com.google.zxing.Result;
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
-import you.chen.media.App;
 import you.chen.media.core.Transform;
+import you.chen.media.utils.Utils;
 
 /**
  * Created by you on 2018-04-26.
@@ -35,7 +35,7 @@ public final class DecoderHandler extends Handler {
                           Transform transform, boolean successQuit, DecoderCallback callback) {
         callbackWeakReference = new WeakReference<>(callback);
         decodeThread = new DecodeThread(w, h, decoder, this, transform, successQuit);
-        soundVibratorHelper = new SoundVibratorHelper(App.getContext());
+        soundVibratorHelper = new SoundVibratorHelper(Utils.context());
         decodeThread.start();
     }
 
