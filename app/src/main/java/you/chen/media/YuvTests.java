@@ -2,8 +2,11 @@ package you.chen.media;
 
 /**
  * Created by you on 2018-07-06.
- * 简单的nv21与i420,NV12,YV12转换
+ * 简单的nv21与i420,NV12,YV12转换, 如需要旋转裁剪可以使用YuvUtils高性能
+ * @deprecated Use {@link you.chen.media.core.YuvUtils}
  */
+
+@Deprecated
 public class YuvTests {
 
     public static void nv21ToI420(byte[] nv21, byte[] i420, int w, int h) {
