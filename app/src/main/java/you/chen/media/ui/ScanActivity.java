@@ -73,7 +73,6 @@ public class ScanActivity extends AppCompatActivity implements TextureView.Surfa
             @Override
             public void onHandleFocus(float x, float y, int w, int h) {
                 helper.handleFocus(CameraUtils.reverseRotate(x, y, w, h, matrix));
-                helper.handleFocusCallback();
             }
         });
     }

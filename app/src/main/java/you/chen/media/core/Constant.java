@@ -10,7 +10,7 @@ import android.media.MediaCodecInfo;
 public interface Constant {
 
     // ----------------- H264 -----------------
-    int FRAME_RATE = 20; //帧率单位K, Camera中一般支持7~30
+    int FRAME_RATE = 20; //Camera中一般支持7~30
     int IFRAME_INTERVAL = 10; //关键帧间隔
 
     //相机的默认最小与最大帧率参数, 包含 FRAME_RATE 范围

@@ -9,21 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="CameraActivity"/>
+        android:text="CameraActivity拍摄"/>
 
     <Button
         android:id="@+id/bt6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="ScanActivity"/>
+        android:text="ScanActivity二维码/条码扫描"/>
 
     <Button
         android:id="@+id/bt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="H264Activity"/>
+        android:text="H264Activity编码H264"/>
 
     <Button
         android:id="@+id/bt3"
@@ -37,21 +37,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="AacActivity"/>
+        android:text="AacActivity 语音AAc"/>
 
     <Button
         android:id="@+id/bt8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="PcmActivity"/>
+        android:text="PcmActivity 语音pcm"/>
 
     <Button
         android:id="@+id/bt5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="Mp4Activity"/>
+        android:text="Mp4Activity Mp4合成"/>
 
     <Button
         android:id="@+id/bt7"

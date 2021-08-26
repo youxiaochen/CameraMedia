@@ -16,7 +16,7 @@ import you.chen.media.utils.LogUtils;
 /**
  * Created by you on 2018-03-18.
  * 拍照, 视频, H264, 扫描的Camera各版本之间的兼容操作, 并支持 手动聚集, 缩放, 闪光
- * https://developer.android.google.cn/guide/topics/media/camera#metering-focus-areas
+ * https://developer.android.google.cn/guide/topics/media/camera#metering-focus-areas,参考
  */
 public final class CameraHelper implements Camera.PreviewCallback {
 
@@ -78,19 +78,19 @@ public final class CameraHelper implements Camera.PreviewCallback {
     }
 
     public Matrix openPicCamera(SurfaceTexture texture, int cameraId, int w, int h,
-                                      SizeFilter filter, int orientation) {
+                                SizeFilter filter, int orientation) {
         return openCamera(texture, cameraId, w, h, filter,
                 Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE, orientation, -1, -1);
     }
 
     public Matrix openVideoCamera(SurfaceTexture texture, int cameraId, int w, int h,
-                                        SizeFilter filter, int minFps, int maxFps) {
+                                  SizeFilter filter, int minFps, int maxFps) {
         return openCamera(texture, cameraId, w, h, filter,
                 Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO, 0, minFps, maxFps);
     }
 
     public Matrix openScanCamera(SurfaceTexture texture, int w, int h,
-                                       SizeFilter filter, int minFps, int maxFps) {
+                                 SizeFilter filter, int minFps, int maxFps) {
         return openCamera(texture, Camera.CameraInfo.CAMERA_FACING_BACK, w, h, filter,
                 Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE, 0, minFps, maxFps);
     }
@@ -110,8 +110,8 @@ public final class CameraHelper implements Camera.PreviewCallback {
      * @return
      */
     public Matrix openCamera(SurfaceTexture texture, int cameraId, int w, int h,
-                                   SizeFilter filter, String focusMode, int orientation,
-                                   int minFps, int maxFps) {
+                             SizeFilter filter, String focusMode, int orientation,
+                             int minFps, int maxFps) {
         this.orientation = orientation;
         if (mCamera == null) {
             mCamera = Camera.open(cameraId);
@@ -307,11 +307,6 @@ public final class CameraHelper implements Camera.PreviewCallback {
             camera.autoFocus(null);
             LogUtils.i("autoFocus..." + success);
         });
-    }
-
-    public void handleFocusCallback() {
-        if (mCamera != null) {
-        }
     }
 
     /**

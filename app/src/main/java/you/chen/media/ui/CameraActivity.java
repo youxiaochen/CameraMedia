@@ -29,6 +29,7 @@ import you.chen.media.widget.FocusView;
 
 /**
  * Created by you on 2018-01-08.
+ *
  */
 public class CameraActivity extends AppCompatActivity
         implements TextureView.SurfaceTextureListener, View.OnClickListener {
