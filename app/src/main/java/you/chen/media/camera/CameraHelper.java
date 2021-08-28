@@ -15,7 +15,7 @@ import you.chen.media.utils.LogUtils;
 
 /**
  * Created by you on 2018-03-18.
- * 拍照, 视频, H264, 扫描的Camera各版本之间的兼容操作, 并支持 手动聚集, 缩放, 闪光
+ * 拍照, 视频, H264, 扫描的Camera各版本之间的兼容操作, 并支持 手动聚焦, 缩放, 闪光
  * https://developer.android.google.cn/guide/topics/media/camera#metering-focus-areas,参考
  */
 public final class CameraHelper implements Camera.PreviewCallback {
@@ -121,7 +121,7 @@ public final class CameraHelper implements Camera.PreviewCallback {
                 Camera.getCameraInfo(cameraId, cameraInfo);
 
                 Camera.Parameters parameters = mCamera.getParameters();
-                //设置聚集类型
+                //设置聚焦类型
                 List<String> focusModes = parameters.getSupportedFocusModes();
                 if (focusMode != null && focusModes.contains(focusMode)) {
                     parameters.setFocusMode(focusMode);
@@ -274,7 +274,7 @@ public final class CameraHelper implements Camera.PreviewCallback {
     public void handleFocus(PointF scalePointF, int fsize, int msize) {
         if (mCamera == null) return;
         Camera.Parameters parameters = mCamera.getParameters();
-        //一般使用能自动聚集的即可
+        //一般使用能自动聚焦的即可
         String autoFocusMode = findFocusbackMode(parameters);
         if (autoFocusMode == null) return;
         mCamera.cancelAutoFocus();
@@ -421,7 +421,7 @@ public final class CameraHelper implements Camera.PreviewCallback {
     }
 
     /**
-     * 查找能回调出{@link Camera#autoFocus(Camera.AutoFocusCallback)}的聚集模式
+     * 查找能回调出{@link Camera#autoFocus(Camera.AutoFocusCallback)}的聚焦模式
      * 源码注释中指出FOCUS_MODE_AUTO 与 FOCUS_MODE_MACRO 支持, 优先使用前者
      * @param parameters
      * @return
