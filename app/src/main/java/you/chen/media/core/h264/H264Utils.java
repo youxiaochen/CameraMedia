@@ -15,9 +15,9 @@ import you.chen.media.core.Transform;
 /**
  * Created by you on 2018-05-19.
  */
-public final class H264Factory {
+public final class H264Utils {
 
-    private H264Factory() {}
+    private H264Utils() {}
 
     public static MediaEncoder createH264MediaEncoder(int width, int height, Matrix matrix,
                                                       @Orientation.OrientationMode int orientation,

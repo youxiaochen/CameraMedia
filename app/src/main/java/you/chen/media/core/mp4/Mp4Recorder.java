@@ -18,7 +18,7 @@ import you.chen.media.core.Orientation;
 import you.chen.media.core.audio.AudioPresentationTime;
 import you.chen.media.core.audio.AudioTaker;
 import you.chen.media.core.audio.AudioTransform;
-import you.chen.media.core.h264.H264Factory;
+import you.chen.media.core.h264.H264Utils;
 import you.chen.media.utils.LogUtils;
 
 /**
@@ -64,7 +64,7 @@ public class Mp4Recorder {
                        int audioBitRate, int aacProfile,
                        int channelConfig, int audioFormat) throws IOException {
 
-        h264Encoder = H264Factory.createH264MediaEncoder(colorFormat, width, height, matrix,
+        h264Encoder = H264Utils.createH264MediaEncoder(colorFormat, width, height, matrix,
                 orientation, h264BitRate, frameRate, frameInterval, new H264Callback());
 
         int bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);

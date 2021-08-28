@@ -26,7 +26,7 @@ import you.chen.media.camera.impl.VideoSizeFilter;
 import you.chen.media.core.Constant;
 import you.chen.media.core.MediaEncoder;
 import you.chen.media.core.h264.H264Callback;
-import you.chen.media.core.h264.H264Factory;
+import you.chen.media.core.h264.H264Utils;
 import you.chen.media.core.h264.H264MuxerCallback;
 import you.chen.media.rx.RxUtils;
 import you.chen.media.utils.FileUtils;
@@ -209,7 +209,7 @@ public class H264Activity extends AppCompatActivity
         try {
             String path = FileUtils.getCacheDirPath()  + saveName;
             MediaEncoder.Callback callback = cb.isChecked() ? new H264MuxerCallback(path) : new H264Callback(path);
-            recorder = H264Factory.createH264MediaEncoder(width, height, matrix, orientation, callback);
+            recorder = H264Utils.createH264MediaEncoder(width, height, matrix, orientation, callback);
             recorder.start(service);
         } catch (IOException e) {
             e.printStackTrace();
