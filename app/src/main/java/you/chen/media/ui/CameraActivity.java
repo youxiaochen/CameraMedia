@@ -64,13 +64,7 @@ public class CameraActivity extends AppCompatActivity
 
         helper = new CameraHelper();
         filter = new PictureSizeFilter();
-        orientationHelper = new OrientationHelper(Utils.context()) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                LogUtils.i("onOrientationChanged %d", orientation);
-                helper.setOrientation(orientation);
-            }
-        };
+        orientationHelper = new OrientationHelper(Utils.context());
 
         initView();
     }
@@ -147,7 +141,7 @@ public class CameraActivity extends AppCompatActivity
         switch (view.getId()) {
             case R.id.bt:
                 helper.takePicture((data, camera) -> {
-                    Bitmap bitmap = CameraUtils.bytesToBitmap(data, matrix, helper.getOrientation());
+                    Bitmap bitmap = CameraUtils.bytesToBitmap(data, matrix, orientationHelper.getOrientation());
                     File f = new File(FileUtils.getCacheDirPath(), "123.png");
                     BitmapUtils.saveBitmap(bitmap, f, true);
                 });

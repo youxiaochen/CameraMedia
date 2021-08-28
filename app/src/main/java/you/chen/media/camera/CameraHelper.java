@@ -55,8 +55,6 @@ public final class CameraHelper implements Camera.PreviewCallback {
      */
     private Camera.CameraInfo cameraInfo;
 
-    private int orientation = 0;
-
     public CameraHelper() {
         cameraInfo = new Camera.CameraInfo();
     }
@@ -80,19 +78,19 @@ public final class CameraHelper implements Camera.PreviewCallback {
     public Matrix openPicCamera(SurfaceTexture texture, int cameraId, int w, int h,
                                 SizeFilter filter, int orientation) {
         return openCamera(texture, cameraId, w, h, filter,
-                Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE, orientation, -1, -1);
+                Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE, -1, -1);
     }
 
     public Matrix openVideoCamera(SurfaceTexture texture, int cameraId, int w, int h,
                                   SizeFilter filter, int minFps, int maxFps) {
         return openCamera(texture, cameraId, w, h, filter,
-                Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO, 0, minFps, maxFps);
+                Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO, minFps, maxFps);
     }
 
     public Matrix openScanCamera(SurfaceTexture texture, int w, int h,
                                  SizeFilter filter, int minFps, int maxFps) {
         return openCamera(texture, Camera.CameraInfo.CAMERA_FACING_BACK, w, h, filter,
-                Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE, 0, minFps, maxFps);
+                Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE, minFps, maxFps);
     }
 
     /**
@@ -104,15 +102,12 @@ public final class CameraHelper implements Camera.PreviewCallback {
      * @param h
      * @param filter
      * @param focusMode 聚焦模式
-     * @param orientation 手机传感方向 {@link OrientationHelper#getOrientation()}
      * @param minFps h264时的最小帧率, 不需要时可传-1
      * @param maxFps h264时的最大帧率, 不需要时可传-1
      * @return
      */
     public Matrix openCamera(SurfaceTexture texture, int cameraId, int w, int h,
-                             SizeFilter filter, String focusMode, int orientation,
-                             int minFps, int maxFps) {
-        this.orientation = orientation;
+                             SizeFilter filter, String focusMode, int minFps, int maxFps) {
         if (mCamera == null) {
             mCamera = Camera.open(cameraId);
 
@@ -131,8 +126,8 @@ public final class CameraHelper implements Camera.PreviewCallback {
                 if (picSize != null) {//拍摄图片时不可null
                     LogUtils.i("Camera Parameters picSize %d - %d", picSize.width, picSize.height);
                     parameters.setPictureSize(picSize.width, picSize.height);
-                    //设置生成图片的旋转角度,只对拍摄照片时有效
-                    parameters.setRotation(getCameraRotation(orientation));
+                    //设置生成图片的旋转角度,只对拍摄照片时有效.,考虑到此方法对部分机型没有效果,拍照后再统一旋转
+                    //parameters.setRotation(getCameraRotation(orientation));
                     parameters.setPictureFormat(ImageFormat.JPEG);
                 }
                 preSize = filter.findOptimalPreSize(parameters.getSupportedPreviewSizes(), picSize, w, h);
@@ -164,6 +159,7 @@ public final class CameraHelper implements Camera.PreviewCallback {
      * 获取当前相机设备对应的旋转角度
      * @param orientation {@link OrientationHelper#getOrientation()}
      * @return 0, 90, 180, 270
+     * @hide
      */
     public int getCameraRotation(int orientation) {
         if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
@@ -195,27 +191,6 @@ public final class CameraHelper implements Camera.PreviewCallback {
             parameters.setFlashMode(flashMode);
             mCamera.setParameters(parameters);
         }
-    }
-
-    /**
-     * 设置当前旋转角度, 此设置只可针对拍摄的图片有效
-     * @param orientation
-     */
-    public void setOrientation(int orientation) {
-        if (mCamera != null) {
-            this.orientation = orientation;
-            Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setRotation(getCameraRotation(orientation));
-            mCamera.setParameters(parameters);
-        }
-    }
-
-    /**
-     * Camera对应的屏幕旋转角度
-     * @return
-     */
-    public int getOrientation() {
-        return orientation;
     }
 
     /**

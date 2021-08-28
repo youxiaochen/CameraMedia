@@ -74,6 +74,42 @@ final public class CameraUtils {
     }
 
     /**
+     * 旋转Bitmap
+     * @param bitmap
+     * @param degree
+     * @return
+     */
+    public static Bitmap rotateBitmap(Bitmap bitmap, int degree) {
+        if (degree == 0) return bitmap;
+        Matrix matrix = new Matrix();
+        matrix.setRotate(degree);
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        bitmap.recycle();
+        return newBitmap;
+    }
+
+    /**
+     * 剪切并旋转角度
+     * @param bitmap
+     * @param x
+     * @param y
+     * @param degree
+     * @return
+     */
+    public static Bitmap rotateClipBitmap(Bitmap bitmap, int x, int y, int width, int height, int degree) {
+        Matrix matrix = null;
+        if (degree > 0) {
+            matrix = new Matrix();
+            matrix.setRotate(degree);
+        }
+        Bitmap clipBitmap = Bitmap.createBitmap(bitmap, x, y, width, height, matrix, true);
+        bitmap.recycle();
+        return clipBitmap;
+    }
+
+    /**
+     * 考虑到在Camera中直接设置parameters.setRotation(getCameraRotation(orientation));
+     * 对部分机型无效,因此统一采用预览拍照后再作旋转
      * 对原始图片数据裁剪旋转
      * @param datas
      * @param cameraMatrix
@@ -82,45 +118,22 @@ final public class CameraUtils {
      */
     public static Bitmap bytesToBitmap(byte[] datas, Matrix cameraMatrix, int orientation) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(datas, 0, datas.length);
-        Bitmap clipBitmap = null;
-
-        boolean isHorizontal = orientation == 90 || orientation == 270;
+        orientation += 90;//需要在原有之上增加旋转的角度
+        if (orientation >= 360) orientation = 0;
         if (cameraMatrix != null) {
             float[] floats = new float[9];//数组0下标为X轴scale, 4为Y轴scale
             cameraMatrix.getValues(floats);
-            if (floats[0] == 1.0f && floats[4] > 1.0f) {//Y轴需要裁剪
-                //如果为水平旋转的状态时,由于图片经过90或者270度旋转,此时为裁剪X轴
-                clipBitmap = clipBitmap(bitmap, floats[4], isHorizontal);
-            } else if (floats[0] > 1.0f && floats[4] == 1.0f) {//X轴需要裁剪
-                //如果为水平旋转的状态时,由于图片经过90或者270度旋转,此时为裁剪Y轴
-                clipBitmap = clipBitmap(bitmap, floats[0], !isHorizontal);
+            if (floats[0] == 1.0f && floats[4] > 1.0f) {//Y轴需要裁剪,实际为width需要裁剪
+                int clipWidth = (int) (bitmap.getWidth() / floats[4]);
+                int x = (bitmap.getWidth() - clipWidth) >> 1;
+                return rotateClipBitmap(bitmap, x, 0, clipWidth, bitmap.getHeight(), orientation);
+            } else if (floats[0] > 1.0f && floats[4] == 1.0f) {//X轴需要裁剪,实际为height需要裁剪
+                int clipHeight = (int) (bitmap.getHeight() / floats[0]);
+                int y = (bitmap.getHeight() - clipHeight) >> 1;
+                return rotateClipBitmap(bitmap, 0, y, bitmap.getWidth(), clipHeight, orientation);
             }
         }
-
-        if (clipBitmap == null) {
-            return bitmap;
-        }
-        bitmap.recycle();
-        return clipBitmap;
+        //不需要裁剪
+        return rotateBitmap(bitmap, orientation);
     }
-
-    /**
-     *
-     * @param bitmap
-     * @param scale 裁剪的比例
-     * @param isClipWidth 是否裁剪宽度
-     * @return
-     */
-    private static Bitmap clipBitmap(Bitmap bitmap, float scale, boolean isClipWidth) {
-        if (isClipWidth) { //裁剪宽度
-            int clipWidth = (int) (bitmap.getWidth() / scale);
-            int x = (bitmap.getWidth() - clipWidth) >> 1;
-            return Bitmap.createBitmap(bitmap, x, 0, clipWidth, bitmap.getHeight());
-        }
-        //裁剪高度
-        int clipHeight = (int) (bitmap.getHeight() / scale);
-        int y = (bitmap.getHeight() - clipHeight) >> 1;
-        return Bitmap.createBitmap(bitmap, 0, y, bitmap.getWidth(), clipHeight);
-    }
-
 }
