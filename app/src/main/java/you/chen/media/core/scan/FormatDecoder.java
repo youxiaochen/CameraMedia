@@ -5,7 +5,6 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.PlanarYUVLuminanceSource;
-import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPointCallback;
 import com.google.zxing.common.HybridBinarizer;
@@ -68,7 +67,7 @@ public class FormatDecoder {
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
         try {
             return formatReader.decodeWithState(bitmap);
-        } catch (ReaderException e) {
+        } catch (Exception e) {
 //            LogUtils.e(e);
         } finally {
             formatReader.reset();

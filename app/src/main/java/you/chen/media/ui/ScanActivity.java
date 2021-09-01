@@ -23,13 +23,14 @@ import you.chen.media.core.Constant;
 import you.chen.media.core.Orientation;
 import you.chen.media.core.Transform;
 import you.chen.media.core.scan.DecoderHandler;
+import you.chen.media.core.scan2.DecoderHandler2;
 import you.chen.media.utils.LogUtils;
 import you.chen.media.widget.CameraView;
 
 /**
  * Created by you on 2018-04-09.
  */
-public class ScanActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, DecoderHandler.DecoderCallback {
+public class ScanActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, DecoderHandler2.DecoderCallback {
 
     CameraView cv_camera;
 
@@ -39,7 +40,7 @@ public class ScanActivity extends AppCompatActivity implements TextureView.Surfa
     //预览的缩放相关参数
     Matrix matrix;
     //扫描解析处理
-    DecoderHandler handler;
+    DecoderHandler2 handler;
 
     public static void lanuch(Context context) {
         context.startActivity(new Intent(context, ScanActivity.class));
@@ -135,7 +136,7 @@ public class ScanActivity extends AppCompatActivity implements TextureView.Surfa
                 new AvcTransform(w, h, 0, Orientation.ROTATE90)
                 : new ClipAvcTransform(matrixSize.x, matrixSize.y, w, h, 0, Orientation.ROTATE90);
         //Camera旋转90, 270时, w, h调换
-        handler = new DecoderHandler(matrixSize.y, matrixSize.x, transform, false, this);
+        handler = new DecoderHandler2(matrixSize.y, matrixSize.x, transform, this);
     }
 
     //释放相机
