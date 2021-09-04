@@ -17,6 +17,10 @@ public interface Constant {
     int DEF_MIN_FPS = 15000;
     int DEF_MAX_FPS = 25000;
 
+    //扫描类的可以适当帧率高一些
+    int SCAN_MIN_FPS = 2500;
+    int SCAN_MAX_FPS = 3000;
+
     /**
      * 码率系数, w * h * 3, 此参数越大拍出的视频质量越大,最好不超过FRAME_RATE
      */

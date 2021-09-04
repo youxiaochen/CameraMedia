@@ -91,11 +91,7 @@ public class DecodeThread extends Thread {
             if (!isRunning) {
                 break;
             }
-            long c = System.currentTimeMillis();
             Result result = decoder.decode(buffer, w, h);
-            long ss = System.currentTimeMillis() - c;
-
-            LogUtils.i("time " + ss);
             if (result != null) {
                 handler.sendMessage(handler.obtainMessage(HANDLE_SUCCESS, result));
                 if (successQuit) {
