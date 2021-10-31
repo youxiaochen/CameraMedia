@@ -71,6 +71,7 @@ public final class MediaEncoder implements Runnable {
             byte[] buffer = bytePool.get();
             //LogUtils.i(TAG, "buffQueue un codec  %s  -  %d", callback.getClass().getSimpleName(), bufferQueue.size());
             transform.transform(data, buffer, len);
+            //实际项目开发中要对Queue限制最大等待数量
             bufferQueue.add(buffer);
         }
     }
