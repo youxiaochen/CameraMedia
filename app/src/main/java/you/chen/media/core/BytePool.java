@@ -8,12 +8,20 @@ import java.util.LinkedList;
  */
 public final class BytePool {
 
+    private static final int DEF_MAX = 10;
+
     //缓存的字节数组大小, 只缓存一种大小的字节池
     private final int length;
+    //最大缓存数量
+    private final int maxSize;
 
     private final LinkedList<byte[]> bytepools = new LinkedList<>();
 
     public BytePool(int length) {
+        this(DEF_MAX, length);
+    }
+    public BytePool(int maxSize, int length) {
+        this.maxSize = maxSize;
         this.length = length;
     }
 
@@ -22,7 +30,7 @@ public final class BytePool {
     }
 
     public synchronized final boolean put(byte[] bytes) {
-        if (bytes.length == length) {
+        if (bytes.length == length && bytepools.size() < maxSize) {
             return bytepools.add(bytes);
         }
         return false;
