@@ -7,8 +7,19 @@ import android.view.OrientationEventListener;
 /**
  * Created by you on 2018-03-21.
  * 只监听手机方向感应旋转 0, 90, 180, 270
+ *
+ * 可以在后面新的appcompat版本中结合Lifecycle  实现 LifecycleEventObserver, 使用时 getLifecycle().addObserver(OrientationHelper)即可
+ * override fun onStateChanged(owner: LifecycleOwner, event: Lifecycle.Event) {
+ *         if (event == Lifecycle.Event.ON_RESUME) {
+ *             enable()
+ *         } else if (event == Lifecycle.Event.ON_PAUSE) {
+ *             disable()
+ *         } else if (event == Lifecycle.Event.ON_DESTROY) {
+ *             owner.lifecycle.removeObserver(this)
+ *         }
+ * }
  */
-public class OrientationHelper {
+public class OrientationHelper {  //上面注释
 
     private int orientation = 0;
 
